@@ -37,6 +37,22 @@ jobs:
       run: |
         npx cap sync
 
+    - name: Inject Unified Kotlin Version Fix
+      run: |
+        # This injects Option 1 directly into the global root configuration
+        cat << 'EOF' >> android/build.gradle
+
+        allprojects {
+            configurations.all {
+                resolutionStrategy {
+                    force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+                    force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
+                    force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
+                }
+            }
+        }
+        EOF
+
     - name: Unblock Gradle Permissions & Update Wrapper
       run: |
         cd android
@@ -47,8 +63,7 @@ jobs:
       run: |
         cd android
         chmod +x gradlew
-        # This parameter forcefully auto-resolves the duplicate Kotlin stdlib mismatches
-        ./gradlew assembleDebug -Pandroid.substituteWithProperties=true
+        ./gradlew assembleDebug
 
     - name: Upload Finished APK Artifact
       uses: actions/upload-artifact@v4
