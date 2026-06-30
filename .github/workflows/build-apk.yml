@@ -26,7 +26,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22' # Updated to Node 22 to clear that deprecation warning log!
+        node-version: '22'
 
     - name: Install Project Dependencies
       run: |
@@ -41,7 +41,8 @@ jobs:
       run: |
         cd android
         chmod +x gradlew
-        ./gradlew wrapper --gradle-version 8.4
+        # Upgraded to 8.9 to perfectly match your project's version requirements
+        ./gradlew wrapper --gradle-version 8.9
 
     - name: Build Gradle APK
       run: |
