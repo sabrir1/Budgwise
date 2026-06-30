@@ -21,7 +21,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-version: '17'
+        java-version: '21' # Upgraded to match your app's exact requirements!
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
@@ -41,7 +41,6 @@ jobs:
       run: |
         cd android
         chmod +x gradlew
-        # Upgraded to 8.9 to perfectly match your project's version requirements
         ./gradlew wrapper --gradle-version 8.9
 
     - name: Build Gradle APK
